@@ -2,39 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mover : MonoBehaviour {
-    public Transform startMarker;
-    public Transform endMarker;
+public class Mover : MonoBehaviour
+{
+    public float speed;
 
-    // Movement speed in units/sec.
-    public float speed = 1.0F;
+    private Rigidbody rb;
 
-    // Time when the movement started.
-    private float startTime;
-
-    // Total distance between the markers.
-    private float journeyLength; 
-
-    // Start is called before the first frame update
     void Start()
     {
-    startTime = Time.time;
-
-    // Calculate the journey length.
-    journeyLength = Vector2.Distance(startMarker.position, endMarker.position);
-}
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-    float distCovered = (Time.time - startTime) * speed;
-
-    // Fraction of journey completed = current distance divided by total distance.
-    float fracJourney = distCovered / journeyLength;
-
-    // Set our position as a fraction of the distance between the markers and pingpong the movement.
-    transform.position = Vector2.Lerp(startMarker.position, endMarker.position, Mathf.PingPong(fracJourney, 1));
-        transform.Rotate(new Vector3(0, 0, 45) * Time.deltaTime);
-}
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
+    }
 }
