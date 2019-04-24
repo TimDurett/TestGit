@@ -13,29 +13,33 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float tilt;
     public Boundary boundary;
+
     public GameObject shot;
-    public Transform shotSpawn;
     public float fireRate;
+    public Transform shotSpawn;
     public AudioSource musicSource;
 
-    private Rigidbody rb;
-    private float nextFire;
 
-    private void Start()
+
+    private float nextFire;
+    private Rigidbody rb;
+
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-    void Update()
+
+     void Update()
     {
-        if (Input.GetButton("Fire1")&& Time.time > nextFire)
+        if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            //  GameObject clone = 
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);  //as GameObject;
+            //GameObject clone = 
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation); //as GameObject;
             musicSource.Play();
-
         }
     }
+
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -53,4 +57,5 @@ public class PlayerController : MonoBehaviour
 
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
     }
+   
 }
